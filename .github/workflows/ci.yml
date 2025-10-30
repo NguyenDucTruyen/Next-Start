@@ -32,4 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Publish Docker
     steps:
+      - uses: actions/checkout@v5
       - run: docker build . -t nguyenductruyen/cicd:${{github.sha}}
+        name: Docker build
+      - run: docker image list
