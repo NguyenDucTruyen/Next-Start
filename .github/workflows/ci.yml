@@ -5,9 +5,17 @@ on:
     branches:
       - main
 
+env:
+  NODE_ENV: production
+
 jobs:
   echo_workflows:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Workflows
-        run: echo "Workflows are running!"
+        run: echo "Workflows are running at ${{env.NODE_ENV}}!"
+  unit_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Unit Test
+        uses: actions/checkout@v5
