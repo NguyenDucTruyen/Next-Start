@@ -1,0 +1,13 @@
+name: CI workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  echo_workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Workflows
+        run: echo "Workflows are running!"
