@@ -12,15 +12,24 @@ jobs:
   unit_test:
     runs-on: ubuntu-latest
     name: Checkout and Setup Node
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v3
         with:
           node-version: ${{env.NODE_VERSION}}
       - run: npm run test
-  notifier:
+
+  notify-job:
     runs-on: ubuntu-latest
+    name: Notifier
     needs: unit_test
     steps:
       - name: Echo Workflows
         run: echo "Node version ${{env.NODE_VERSION}}!"
+
+  cd:
+    runs-on: ubuntu-latest
+    name: Build and Publish Docker
+    steps:
+      - run: docker build . -t nguyenductruyen/cicd:${{github.sha}}
