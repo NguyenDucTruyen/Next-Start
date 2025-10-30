@@ -6,16 +6,21 @@ on:
       - main
 
 env:
-  NODE_ENV: production
+  NODE_VERSION: 22.0.0
 
 jobs:
-  echo_workflows:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Echo Workflows
-        run: echo "Workflows are running at ${{env.NODE_ENV}}!"
   unit_test:
     runs-on: ubuntu-latest
+    name: Checkout and Setup Node
     steps:
-      - name: Unit Test
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{env.NODE_VERSION}}
+      - run: npm run test
+  notifier:
+    runs-on: ubuntu-latest
+    needs: unit_test
+    steps:
+      - name: Echo Workflows
+        run: echo "Node version ${{env.NODE_VERSION}}!"
